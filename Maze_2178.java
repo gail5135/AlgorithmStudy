@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Maze {
+public class Maze_2178 {
     public static int lengthX;
     public static int lengthY;
     public static int[] dx = {0, 1, 0, -1};
