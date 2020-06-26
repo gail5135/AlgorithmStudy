@@ -11,7 +11,6 @@ public class SafetyArea_2468 {
     public static int[] dy = {-1, 0, 1, 0};
     public static Queue<int[]> q;
     public static boolean[][] check;
-    public static int height;
     public static ArrayList<Integer> ans = new ArrayList<>();
 
 
@@ -29,26 +28,40 @@ public class SafetyArea_2468 {
             }
         }
 
-        for(int i=2; i < 100; ++i){
+        for(int i=1; i < 101; ++i){
             q = new LinkedList<>();
             check = new boolean[length][length];
             int temp = 0;
+            boolean oneFlag = true;
+            boolean zeroFlag = true;
 
             for(int j=0; j < length; ++j){
-                for(int k=0; k < length; ++j){
+                for(int k=0; k < length; ++k){
                     if(mapOrigin[j][k] <= i){
                         mapCopy[j][k] = 0;
+                        zeroFlag = false;
                     }
                     else {
-                        mapCopy[j][j] = 1;
+                        mapCopy[j][k] = 1;
+                        oneFlag = false;
                     }
                 }
             }
 
-            for(int j=0; i < length; ++i){
+
+            if(oneFlag){
+                ans.add(1);
+                break;
+            }
+
+            if(zeroFlag){
+                ans.add(0);
+            }
+
+            for(int j=0; j < length; ++j){
                 for(int k=0; k < length; ++k){
                     if(mapCopy[j][k] == 1 && !check[j][k]){
-                        q.add(new int[]{});
+                        q.add(new int[]{j, k});
                         check[j][k] = true;
                         temp += dfs();
                     }
@@ -56,7 +69,6 @@ public class SafetyArea_2468 {
             }
 
             ans.add(temp);
-
         }
 
 
