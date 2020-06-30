@@ -41,29 +41,42 @@ public class RobotCleaner_14503 {
         }
 
         queue = new LinkedList<>();
-        queue.add(new int[]{startY, startX});
+        queue.add(new int[]{startY, startX, lookingPosition});
         check[startY][startX] = true;
 
-        for(int i = 0; i < lengthX; ++i){
-            for(int j = 0; j < lengthY; ++j){
-                if(map[i][j] == 0 && !check[i][j]){
-                    check[i][j] = true;
-                    bfs();
-                }
-            }
-        }
+        int answer = bfs();
 
-
+        System.out.println(answer);
     }
 
-    public static void bfs(){
+    public static int bfs(){
+        int ans = 1;
+
         while(!queue.isEmpty()){
             int[] temp = queue.poll();
 
-            for(int a = lookingPosition; a < lookingPosition+4; ++a){
+            for(int a = temp[2]; a < temp[2]+4; ++a){
+                if(temp[0] + dy[a] >= lengthY || temp[0] + dy[a] < 0 || temp[1] + dx[a]>= lengthX || temp[1] +dx[a] < 0 ){
+                    continue;
+                }
+                if(check[temp[0]+dy[a]][temp[1]+dx[a]] || map[temp[0]+dy[a]][temp[1]+dx[a]] == 1){
+                    continue;
+                }
 
+                if(temp[2] >= 3){
+                    temp[2] = 0;
+                }
+                else{
+                    temp[2] += 1;
+                }
+
+                queue.add(new int[]{temp[0]+dy[a], temp[1]+dx[a], temp[2]});
+                check[temp[0]+dy[a]][temp[1]+dx[a]] = true;
+                ans++;
             }
         }
+
+        return ans;
     }
 }
 
